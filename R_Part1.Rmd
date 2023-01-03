@@ -1,0 +1,76 @@
+---
+title: "STA 32 Homework 4"
+header-includes:
+   - \usepackage{enumerate,graphicx}
+geometry: margin=0.5in
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment = NA)
+options(scipen = 999) #Remove the scientific notation
+```
+
+\section{R Homework}
+I.
+
+### (a)
+
+```{r, echo = T}
+get_centerd_sd <- function(arg1){
+  sd((arg1-mean(arg1))/sd(arg1))
+}
+
+get_centerd_sd(1:100)
+get_centerd_sd(rep(-1:4, each = 2, times = 3))
+```
+
+### (b)
+
+
+```{r, echo = T}
+#my.vec <-c(1,1,1,1)
+
+get_empirical_ci <- function(arg1){
+
+my.vec <- c(mean(arg1) - 2*sd(arg1),mean(arg1) + 2*sd(arg1))
+  
+names(my.vec)[1] <- "lower"
+names(my.vec)[2] <- "upper"  
+my.vec
+
+}
+
+get_empirical_ci(1:100)
+get_empirical_ci(rep(-1:4, each = 2, times = 3))
+```
+
+### (c)
+
+
+```{r, echo = T}
+get_new_mean <- function(arg1){
+  
+  condition = (arg1<(3*sd(arg1) + mean(arg1)) & arg1>(mean(arg1)-3*sd(arg1)))
+  new.vec = arg1[condition]
+    mean(new.vec)
+  
+}
+mean(c(1:100,200,300))
+get_new_mean(c(1:100,200,300))
+
+mean(rep(c(-1:4, 32)))
+get_new_mean(rep(c(-1:4, 32)))
+
+mean(c(10:5, 2))
+get_new_mean(c(10:5, 2))
+
+```
+
+
+# R Appendix
+
+```{r, ref.label=knitr::all_labels(), eval = F, echo = T}
+
+}
+```
+

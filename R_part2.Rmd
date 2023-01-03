@@ -1,0 +1,227 @@
+---
+title: "R part 2"
+header-includes:
+   - \usepackage{enumerate,graphicx}
+geometry: margin=0.5in
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment = NA)
+options(scipen = 999) #Remove the scientific notation
+```
+
+
+I.
+
+### (a)
+
+```{r}
+X = rnorm(1000, mean = 2, sd = 1)
+Y = rnorm(1000, mean = -2, sd = 5)
+
+mean(X)
+sd(X)
+
+mean(Y)
+sd(Y)
+
+```
+
+### (b)
+
+
+```{r}
+X = rnorm(1000, mean = 2, sd = 1)
+Y = rnorm(1000, mean = -2, sd = 5)
+
+W = X + Y
+
+mean(W)
+sd(W)
+```
+
+### (c)
+
+
+```{r}
+X = rnorm(1000, mean = 2, sd = 1)
+Y = rnorm(1000, mean = -2, sd = 5)
+
+W = X + Y
+
+1 - pnorm(3, mean = mean(W), sd = sd(W))
+
+
+```
+
+### (d)
+```{r}
+X = rnorm(1000, mean = 2, sd = 1)
+Y = rnorm(1000, mean = -2, sd = 5)
+
+W = X + Y
+#p(x>3) = 1 - p(x<3) = 1 - p(Z < (3-mean)/sd)
+
+Z = (3-mean(W))/sd(W)
+# Z = 0.6680729
+#p(x>3) = 1 - .7454 = 0.2546 
+
+difference = 1 - pnorm(3, mean = mean(W), sd = sd(W)) - (0.2546 )
+difference
+```
+
+II.
+
+lynx = as.numeric(lynx)
+
+### (a)
+This data doesn't look noramlly distributed beacause it skewed to the right
+```{r}
+lynx = as.numeric(lynx)
+#lynx
+
+hist(lynx)
+mean(lynx)
+sd(lynx)
+```
+
+### (b)
+
+
+```{r}
+lynx = as.numeric(lynx)
+sample <- c(rnorm(10, mean = mean(lynx), sd = sd(lynx)))
+
+mean(sample)
+
+```
+
+### (c)
+
+
+```{r}
+lynx = as.numeric(lynx)
+#sample <- c(rnorm(10, mean = mean(lynx), sd = sd(lynx)))
+limbo = 1:1000
+ 
+loop = sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  names(results) = c("Mean")
+  return(results)
+})
+
+mean(loop)
+```
+
+### (d)
+```{r}
+lynx = as.numeric(lynx)
+sample <- c(rnorm(10, mean = mean(lynx), sd = sd(lynx)))
+
+lynx = as.numeric(lynx)
+#sample <- c(rnorm(10, mean = mean(lynx), sd = sd(lynx)))
+limbo = 1:1000
+ 
+loop = sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  names(results) = c("Mean")
+  return(results)
+})
+
+abs(mean(sample) - mean(loop))
+abs(sd(sample) - sd(loop))
+
+```
+III.
+
+### (a)
+This is less skewness than the population distribution
+```{r}
+lynx = as.numeric(lynx)
+
+limbo = 1:1000
+ 
+loop = sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  names(results) = c("Mean")
+  return(results)
+})
+
+hist(loop)
+
+```
+
+### (b)
+
+
+```{r}
+lynx = as.numeric(lynx)
+
+limbo = 1:1000
+loop = sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  names(results) = c("Mean")
+  return(results)
+})
+
+sample = sample(loop,50,replace = FALSE)
+sample
+mean(sample)
+sd(sample)
+
+
+```
+
+### (c)
+the difference was more precise in this question compared to the other answer in 2C
+
+```{r}
+lynx = as.numeric(lynx)
+
+limbo = 1:1000
+
+loop_two = sapply(limbo, function(i){
+  sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  return(results)
+})})
+
+mean(loop_two)
+sd(loop_two)
+
+```
+
+### (d)
+The histogram is somewhat symetrical and more bell-shaped
+
+```{r}
+limbo = 1:1000
+  
+loop_two = sapply(limbo, function(i){
+  sapply(limbo, function(i){
+  sampless <- sample(lynx,10,replace = FALSE)
+  all_meansss <- mean(sampless)
+  results <- all_meansss
+  return(results)
+})})
+
+hist(loop_two)
+
+```
+
+# R Appendix
+
+```{r, ref.label=knitr::all_labels(), eval = F, echo = T}
+
+```
+
